@@ -1,0 +1,32 @@
+{{!< ../layouts/default}}
+
+<h1>{{ title }}</h1>
+
+{{{link 'Create' '/Scouts/Create'}}}
+
+<table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Birthdate</th>
+            <th>Rank</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each scouts}}
+            <tr>
+                <td>{{firstname}}</td>
+                <td>{{lastname}}</td>
+                <td>{{birthdate}}</td>
+                <td>{{rank}}</td>
+                <td>
+                    {{{link 'Details' detailsurl}}} |
+                    {{{link 'Edit' editurl}}} |
+                    {{{link 'Delete' deleteurl}}}
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

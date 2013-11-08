@@ -1,0 +1,16 @@
+{{!< ../layouts/default}}
+
+<h1>Edit Scout</h1>
+
+{{#form scout.posturl 'POST'}}
+    {{#with scout}}
+        <div>
+            {{{input firstname 'text' 'First Name' id="firstname" name="firstname"}}}
+            {{{input lastname 'text' 'Last Name' id="lastname" name="lastname"}}}
+            {{{input birthdate 'date' 'Birthdate' id="birthdate" name="birthdate"}}}
+            {{{input rank 'text' 'Rank' id="rank" name="rank"}}}
+            {{{input 'Submit' 'submit' '' id="submit"}}}
+        </div>
+    {{/with}}
+{{/form}}
+

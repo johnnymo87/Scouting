@@ -1,0 +1,13 @@
+{{!< ../layouts/default}}
+
+<h1>Scout Details</h1>
+
+{{#with scout}}
+    <div>
+        {{{input firstname 'text' 'First Name'  id='firstname' name='firstname' readonly="true"}}}
+        {{{input lastname 'text' 'Last Name' id='lastname' name='lastname' readonly="true"}}}
+        {{{input birthdate 'date' 'Birthdate' id='birthdate' name='birthdate' readonly="true"}}}
+        {{{input rank 'text' 'Rank' id='rank' name='birthdate' readonly="true"}}}
+    </div>
+{{/with}}
+{{{link 'Edit' scout.editurl}}}
