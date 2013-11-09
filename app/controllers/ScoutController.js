@@ -15,7 +15,7 @@ module.exports = function (app, Scouts, helpers, paging, config) {
 
                 orderby[field] = direction;
                 res.locals.title = 'Scouts';
-                paging.find(Scouts, {}, null, orderby, 1, function (err, scouts) {
+                paging.find(Scouts, {}, null, orderby, 0, function (err, scouts) {
                     if (err) res.locals.error = err;
 
                     res.locals.result = scouts;
@@ -52,6 +52,8 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                     createdby: 'web',
                     modifiedby: 'web'
                 };
+
+                console.log(scout);
 
                 Scouts.create(scout, function (err, doc) {
                     if (err) res.locals.error = console.log(err);
