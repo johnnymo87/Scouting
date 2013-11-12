@@ -6,10 +6,7 @@ module.exports = function (dal, ModelMetadata) {
             firstname: {type: String, required: true, unique: false},
             lastname: {type: String, required: true, unique: false},
             birthdate: {type: Date, required: false, unique: false},
-//            rank: {type: String, required: true, unique: false},
-//            achievements: [
-//
-//            ],
+            rank: {type: String, required: true, unique: false},
             akelas: [
                 {type: Schema.Types.ObjectId, ref: 'akelas'}
             ],
@@ -17,4 +14,4 @@ module.exports = function (dal, ModelMetadata) {
         }));
 
     return mongoose.model('scouts', ScoutSchema);
-}
+};

@@ -1,7 +1,7 @@
 //var resource = require('express-resource');
 var MongoClient = require('mongodb').MongoClient;
 
-module.exports = function (app, ApiController, HomeController, ScoutController, models) {
+module.exports = function (app, ApiController, HomeController, ScoutController, AkelaController, models) {
 
     // Home
     //app.resource(app.controllers.home);
@@ -44,8 +44,8 @@ module.exports = function (app, ApiController, HomeController, ScoutController, 
 //        })
 //    });
 
-//    // Akela
-//    app.get('/Akelas', AkelaController.index);
+    // Akela
+    app.get('/Akelas', AkelaController.index);
 //    app.post('/Akelas', AkelaController.create);
 //    app.get('/Akelas/:id', AkelaController.read);
 //    app.post('/Akelas/:id', AkelaController.update);

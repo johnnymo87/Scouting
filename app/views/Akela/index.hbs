@@ -1,0 +1,34 @@
+{{!< ../layouts/default }}
+
+<script type="text/javascript">
+    (function() {
+       $('#akelas-tab').addClass('active');
+    }())
+</script>
+
+<h1>Akelas</h1>
+
+ <table>
+     <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Primary Email</th>
+            <th>Alternate Email</th>
+            <th>Primary Phone</th>
+            <th>Alternate Phone</th>
+        </tr>
+     </thead>
+     <tbody>
+        {{#each akelas}}
+            <tr>
+                <td>{{firstname}}</td>
+                <td>{{lastname}}</td>
+                <td>{{primaryemail}}</td>
+                <td>{{alternateemail}}</td>
+                <td>{{primaryphone}}</td>
+                <td>{{alternatephone}}</td>
+            </tr>
+        {{/each}}
+     </tbody>
+ </table>

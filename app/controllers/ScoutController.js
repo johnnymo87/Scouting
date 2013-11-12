@@ -59,7 +59,7 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                     if (err) res.locals.error = console.log(err);
 
                     res.redirect('/Scouts');
-                })
+                });
             }
         },
         read: [
@@ -79,8 +79,8 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                         rank: doc.rank,
                         editurl: util.format('/Scouts/Edit/%s', doc._id.toString()),
 
-                    }
-                    res.locals.title = 'Scout Details'
+                    };
+                    res.locals.title = 'Scout Details';
 
                     res.render('Scout/details');
                 })
@@ -99,7 +99,7 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                         birthdate: helpers.Utils.dateFormat(doc.birthdate, 'yyyyMMdd', '-'),
                         rank: doc.rank,
                         posturl: util.format('/Scouts/Edit/%s', doc._id)
-                    }
+                    };
 
                     res.render('Scout/edit');
                 });
@@ -112,13 +112,13 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                     rank: req.body.rank,
                     datemodified: new Date(),
                     modifiedby: 'web'
-                }
+                };
 
                 Scouts.findOneAndUpdate({_id: req.params.id}, scout, {new: false}, function (err, doc) {
                     if (err) console.log(err);
 
                     res.redirect('/Scouts');
-                })
+                });
             }
         },
 
