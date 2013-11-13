@@ -77,8 +77,7 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                         lastname: doc.lastname,
                         birthdate: helpers.Utils.dateFormat(doc.birthdate, 'yyyyMMdd', '-'),
                         rank: doc.rank,
-                        editurl: util.format('/Scouts/Edit/%s', doc._id.toString()),
-
+                        editurl: util.format('/Scouts/Edit/%s', doc._id.toString())
                     };
                     res.locals.title = 'Scout Details';
 
@@ -108,7 +107,7 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                 var scout = {
                     firstname: req.body.firstname,
                     lastname: req.body.lastname,
-                    birthdate: new Date(req.body.birthdate).getTime() / 1000,
+                    birthdate: req.body.birthdate,
                     rank: req.body.rank,
                     datemodified: new Date(),
                     modifiedby: 'web'

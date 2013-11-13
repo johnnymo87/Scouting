@@ -13,4 +13,4 @@ module.exports = function (dal, ModelMetadata) {
     }));
 
     return mongoose.model('akelas', AkelaSchema);
-}
+};
