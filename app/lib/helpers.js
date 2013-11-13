@@ -35,21 +35,21 @@ module.exports = (function(Handlebars) {
     }
 
     function getDate(date, padding) {
-        var day = date.getDate(),
+        var day = date.getUTCDate(),
             dayPadding = padding ? (day < 10 ? '0' : '') : '';
 
         return util.format('%s%d', dayPadding, day);
     }
 
     function getMonth(date, padding) {
-        var month = date.getMonth() + 1,
+        var month = date.getUTCMonth() + 1,
             monthPadding = padding ? (month < 10 ? '0' : '') : '';
 
         return util.format('%s%d', monthPadding, month);
     }
 
     function getYear(date, fullYear) {
-        var year = fullYear ? date.getFullYear() : date.getYear();
+        var year = fullYear ? date.getUTCFullYear() : date.getYear();
 
         return util.format('%s', year);
     }
