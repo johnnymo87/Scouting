@@ -1,5 +1,5 @@
 
-module.exports = function (app, models) {
+module.exports = function (app, models, services) {
     var controller = {},
         user = "API",
         applyMeta = function(model, isNew) {
@@ -25,11 +25,14 @@ module.exports = function (app, models) {
          */
         function (req, res, next) {
             var query = req.query,
-                model = models[req.params.Model];
+                serviceName = req.params.Model.substring(0, req.params.Model.length - 1) + "Service",
+                service = services[serviceName];
 
-            //req.Model is a value I set in libs/params.js
-            model.find(query, function (err, docs) {
+            console.log(serviceName);
+            console.log(service);
+            service.findAll({fieldName: 'firstname', direction: 1}, 0, function(err, docs) {
                 if (err) return next(err);
+
                 return res.json(docs);
             });
         }
