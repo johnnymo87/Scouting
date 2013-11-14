@@ -1,5 +1,5 @@
 
-module.exports = function (app) {
+module.exports = function (app, models) {
     var controller = {},
         user = "API",
         applyMeta = function(model, isNew) {
@@ -24,9 +24,11 @@ module.exports = function (app) {
          req.body = json request body from post / put requests
          */
         function (req, res, next) {
-            var query = req.query;
+            var query = req.query,
+                model = models[req.params.Model];
+
             //req.Model is a value I set in libs/params.js
-            req.Model.find(query, function (err, docs) {
+            model.find(query, function (err, docs) {
                 if (err) return next(err);
                 return res.json(docs);
             });
@@ -34,8 +36,7 @@ module.exports = function (app) {
     ]
     controller.create = [
         function (req, res, next) {
-            console.log(req.body);
-            var model = new req.Model(req.body);
+            var model = new models[req.params.Model](req.body);
             applyMeta(model, true);
             model.save(function (err, doc) {
                 if (err) return next(err);
@@ -45,8 +46,9 @@ module.exports = function (app) {
     ]
     controller.read = [
         function (req, res, next) {
-            var id = req.params.id;
-            req.Model.findById(id, function (err, doc) {
+            var id = req.params.id,
+                model = models[req.params.Model];
+            model.findById(id, function (err, doc) {
                 if (err) return next(err);
                 if (doc === null) return res.send(404);
                 return res.json(doc);
@@ -55,11 +57,12 @@ module.exports = function (app) {
     ]
     controller.update = [
         function (req, res, next) {
-            var id = req.params.id;
+            var id = req.params.id,
+                model = models[req.params.Model];
             //default update is a full replace
             //may want to give attribute replacement instead?
             applyMeta(req.body, false);
-            req.Model.findByIdAndUpdate(id, req.body, function (err, doc) {
+            model.findByIdAndUpdate(id, req.body, function (err, doc) {
                 if (err) return next(err);
                 if (doc === null) return res.send(404);
                 return res.json(doc);
@@ -68,8 +71,9 @@ module.exports = function (app) {
     ]
     controller.destroy = [
         function (req, res, next) {
-            var id = req.params.id;
-            req.Model.findByIdAndRemove(id, function (err, doc) {
+            var id = req.params.id,
+                model = models[req.params.Model];
+            model.findByIdAndRemove(id, function (err, doc) {
                 if (err) return next(err);
                 if (doc === null) return res.send(404);
                 return res.send(204);
