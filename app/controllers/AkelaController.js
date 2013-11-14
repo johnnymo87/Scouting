@@ -6,7 +6,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelaService) {
         index: function (req, res, next) {
             var orderby = {
                     field: req.query.orderby || 'firstname',
-                    direction: req.query.orderby || 1
+                    direction: req.query.direction || 1
                 };
 
             AkelaService.findAllAkelas(orderby, 0, function(err, akelas) {
@@ -15,7 +15,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelaService) {
                 res.locals.title = 'Akelas';
                 res.locals.akelas = akelas;
 
-                res.render('Scouts/index');
+                res.render('Akela/index');
             });
         },
         create: {

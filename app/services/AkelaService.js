@@ -6,7 +6,7 @@ module.exports = function(app, Akelas, paging, helpers, config) {
     function findAllAkelas(orderby, page, callback) {
         var sort = {};
 
-        sort[orderby.fieldname] = sort.direction;
+        sort[orderby.fieldname] = orderby.direction;
         paging.find(Akelas, {}, null, sort, page, function(err, docs) {
             if (err) {
                 console.log(err);
