@@ -62,11 +62,11 @@ module.exports = function (app, ApiController, HomeController, ScoutController, 
 
     //Generic restful api for all models - if previous routes are not matched, will fall back to these
     //See libs/params.js, which adds param middleware to load & set req.Model based on :model argument
-    app.get('/api/:model', ApiController.search);
-    app.post('/api/:model', ApiController.create);
-    app.get('/api/:model/:id', ApiController.read);
-    app.post('/api/:model/:id', ApiController.update);
-    app.del('/api/:model/:id', ApiController.destroy);
+    app.get('/api/:Model', ApiController.search);
+    app.post('/api/:Model', ApiController.create);
+    app.get('/api/:Model/:id', ApiController.read);
+    app.post('/api/:Model/:id', ApiController.update);
+    app.del('/api/:Model/:id', ApiController.destroy);
 
 
     //whenever a router parameter :model is matched, this is run
