@@ -18,7 +18,6 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                 paging.find(Scouts, {}, null, orderby, 0, function (err, scouts) {
                     if (err) res.locals.error = err;
 
-                    res.locals.result = scouts;
                     res.locals.scouts = _.map(scouts, function (scout) {
                         var bd = scout.birthdate;
                         return {
@@ -53,8 +52,6 @@ module.exports = function (app, Scouts, helpers, paging, config) {
                     modifiedby: 'web'
                 };
 
-                console.log(scout);
-
                 Scouts.create(scout, function (err, doc) {
                     if (err) res.locals.error = console.log(err);
 
@@ -88,6 +85,8 @@ module.exports = function (app, Scouts, helpers, paging, config) {
         update: {
             get: function (req, res, next) {
                 var id = req.params.id;
+
+                res.locals.title = "Update Scout";
 
                 Scouts.findOne({_id: id}, function (err, doc) {
                     if (err) console.log(err);

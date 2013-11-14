@@ -46,7 +46,8 @@ module.exports = function (app, ApiController, HomeController, ScoutController, 
 
     // Akela
     app.get('/Akelas', AkelaController.index);
-//    app.post('/Akelas', AkelaController.create);
+    app.get('/Akelas/Create', AkelaController.create.get);
+    app.post('/Akelas/Create', AkelaController.create.post);
 //    app.get('/Akelas/:id', AkelaController.read);
 //    app.post('/Akelas/:id', AkelaController.update);
 //    app.del('/Akelas/:id', AkelaController.destroy);

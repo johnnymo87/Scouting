@@ -1,0 +1,17 @@
+{{!< ../layouts/default }}
+
+<h1>Create Scout</h1>
+
+<div class="form-container">
+    <form action="/Akelas/Create" method="POST">
+        <div>
+            {{{input '' 'text' 'First Name' id="firstname" name="firstname"}}}
+            {{{input '' 'text' 'Last Name' id='lastname' name='lastname'}}}
+            {{{input '' 'text' 'Primary Email' id='primaryemail' name='primaryemail'}}}
+            {{{input '' 'text' 'Alternate Email' id='alternateemail' name='alternateemail'}}}
+            {{{input '' 'text' 'Primary Phone' id='primaryphone' name='primaryphone'}}}
+            {{{input '' 'text' 'Alternate Phone' id='alternatephone' name='alternatephone'}}}
+        </div>
+        {{{input 'Create' 'submit' '' }}}
+    </form>
+</div>
