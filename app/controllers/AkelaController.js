@@ -9,7 +9,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelaService) {
                     direction: req.query.direction || 1
                 };
 
-            AkelaService.findAllAkelas(orderby, 0, function(err, akelas) {
+            AkelaService.findAll(orderby, 0, function(err, akelas) {
                 if (err) console.log(err);
 
                 res.locals.title = 'Akelas';
