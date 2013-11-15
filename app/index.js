@@ -36,6 +36,12 @@ var train = require('express-train'),
             "path": "services",
             "autoinject": true,
             "aggregateOn": "services"
+        },
+        //I think this will still work with the "pub" above being given autoinject true.....
+        //I'm only doing it this way to add specificity to what we are allowing to be injected.
+        "extensions": {
+            "path" : "public/js/extensions",
+            "autoinject" : true
         }
     };
 

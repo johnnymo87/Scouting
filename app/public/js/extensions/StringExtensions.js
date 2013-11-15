@@ -1,7 +1,7 @@
-String.prototype.format = function(text) {
+String.prototype.format = function() {
     var args = arguments;
 
-    return text.replace(/({\d+})/g, function(match, num) {
-        return args[num] == 'undefined' ? match : args[num];
+    return this.replace(/{(\d+)}/g, function(match, num) {
+        return typeof(args[num]) == 'undefined' ? match : args[num];
     })
 }

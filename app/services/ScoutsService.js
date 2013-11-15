@@ -2,20 +2,34 @@ var util = require('util'),
     _ = require('underscore');
 
 module.exports = function(app, Scouts, paging, helpers, config) {
+
+    function mapScout(scout) {
+        var baseurl = 'Scouts/{0}/' + scout.id;
+        console.log(baseurl);
+        console.log(typeof(baseurl));
+        return {
+            id: scout._id,
+            firstname: scout.firstname,
+            lastname: scout.lastname,
+            birthdate: helpers.Utils.dateFormat(scout.birthdate, 'MMddyyyy', '-'),
+            rank: scout.rank,
+            detailsurl: 'Scouts/{0}'.format(scout.id),
+            editurl: baseurl.format('edit'),
+            deleteurl: baseurl.format('delete')
+        }
+    }
+
     function findAllScouts(orderby, page, callback) {
         var sort = {};
 
         sort[orderby.fieldname] = orderby.direction;
-        var result = paging.find(Scouts, {}, null, sort, page, callback);
+        paging.find(Scouts, {}, null, sort, page, function(err, docs){
+            if (err) return callback(err, null);
 
-//        _.each(result, function(obj){
-//            obj.birthdate = helpers.Utils.dateFormat(obj.birthdate, 'MMddyyyy', '-');
-//            console.log("test");
-//        })
+            var akelas = _.map(docs, mapScout);
 
-        result.birthdate = helpers.Utils.dateFormat(result.birthdate, 'MMddyyyy', '-');
-
-        return result;
+            callback(null, akelas);
+        });
     }
 
     function findScoutById(id, callback) {
