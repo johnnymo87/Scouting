@@ -1,7 +1,7 @@
 var util = require('util'),
     _ = require('underscore');
 
-module.exports = function (app, Akelas, helpers, paging, config, AkelaService) {
+module.exports = function (app, Akelas, helpers, paging, config, AkelasService) {
     return {
         index: function (req, res, next) {
             var orderby = {
@@ -9,8 +9,8 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelaService) {
                     direction: req.query.direction || 1
                 };
 
-            AkelaService.findAll(orderby, 0, function(err, akelas) {
-                if (err) console.log(err);
+            AkelasService.findAll(orderby, 0, function(err, akelas) {
+                if (err) return next(err);
 
                 res.locals.title = 'Akelas';
                 res.locals.akelas = akelas;
@@ -22,26 +22,22 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelaService) {
             get: function (req, res, next) {
                 res.locals.title = "Create Akela";
 
-                res.render('Akela/create')
+                return res.render('Akela/create')
             },
             post: function(req, res, next) {
                 var akela = {
                     firstname: req.body.firstname,
                     lastname: req.body.lastname,
                     primaryemail: req.body.primaryemail,
-                    alternateemail: req.body.alternateemail || "",
-                    primaryphone: req.body.primaryphone || "",
-                    alternatephone: req.body.alteratephone || "",
-                    datecreated: new Date(),
-                    datemodified: new Date(),
-                    createdby: "web",
-                    modifiedby: 'web'
+                    alternateemail: req.body.alternateemail,
+                    primaryphone: req.body.primaryphone,
+                    alternatephone: req.body.alternatephone
                 };
 
-                Akelas.create(akela, function(err, doc) {
-                    if (err) console.log(err);
+                AkelasService.create(akela, function(err, res) {
+                    if (err) return next(err);
 
-                    res.redirect('/Akelas');
+                    return res.redirect('/Akelas');
                 });
             }
         },
@@ -49,27 +45,70 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelaService) {
             get: function(req, res, next) {
                 var id = req.params.id;
 
-                Akelas.findOne({_id: id}, function(err, doc) {
-                    if (err) console.log(err);
+                AkelasService.findById(id, function(err, akela) {
+                    if (err) return next(err);
 
-                    res.locals.akela = {
-                        firstname: doc.firstname,
-                        lastname: doc.lastname,
-                        primaryemail: doc.primaryemail,
-                        alternateemail: doc.alternateemail,
-                        primaryphone: doc.primaryphone,
-                        alternatephone: doc.alternatephone
-                    };
+                    res.locals.title = 'Akela Details';
+                    res.locals.akela = akela;
 
-                   res.render('Akela/details');
+                    return res.render('Akela/details')
                 });
             }
         },
         update: {
+            get: function(req, res, next) {
+                var id = req. params.id;
 
+                AkelasService.findById(id, function(err, akela) {
+                    if (err) return next(err);
+
+                    res.locals.title = 'Edit Akela';
+                    res.locals.akela = akela;
+
+                    return res.render('Akela/edit');
+                });
+            },
+            post: function(req, res, next) {
+                var akela = {
+                    id: req.body.id,
+                    firstname: req.body.firstname,
+                    lastname: req.body.lastname,
+                    primaryemail: req.body.primaryemail,
+                    alternateemail: req.body.alternateemail,
+                    primaryphone: req.body.primaryphone,
+                    alternatephone: req.body.alternatephone
+                };
+
+                AkelasService.update(akela, function(err, akela) {
+                    if (err) return next(err);
+
+                    return res.redirect(util.format('/Scouts/Details/%s', akela.id));
+                });
+            }
         },
         destroy: {
+            get: function(req, res, next) {
+                var id = req.params.id;
 
+                AkelasService.findById(id, function(err, akela) {
+                    if (err) return next(err);
+
+                    res.locals.title = 'Delete Akela';
+                    res.locals.akela = akela;
+
+                    return res.render('Akela/delete');
+                });
+            },
+            post: function(req, res, next) {
+                var id = req.params.id;
+
+                AkelasService.remove(id, function(err, result) {
+                    if (err) return next(err);
+
+
+                    return res.redirect('/Scouts/');
+                });
+            }
         }
     }
 }
