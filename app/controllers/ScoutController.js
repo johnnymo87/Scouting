@@ -4,20 +4,22 @@ var util = require('util'),
 module.exports = function (app, Scouts, helpers, paging, config, ScoutsService) {
     return {
         index: function (req, res, next) {
-                var orderby = {
-                        field: req.query.orderby || 'firstname',
-                        direction: Number(req.query.direction) || 1
-                    };
+            var orderby = {
+                field: req.query.orderby || 'firstname',
+                direction: Number(req.query.direction) || 1
+            };
 
-                ScoutsService.findAll(orderby, 0, function(err, scouts) {
-                    if(err) console.log(err);
+            ScoutsService.findAll(orderby, 0, function (err, scouts) {
+                if (err) console.log(err);
 
-                    res.locals.title = 'Scouts';
-                    res.locals.scouts = scouts;
+                console.log(scouts);
 
-                    res.render('Scout/index');
-                });
-            },
+                res.locals.title = 'Scouts';
+                res.locals.scouts = scouts;
+
+                res.render('Scout/index');
+            });
+        },
         create: {
             get: function (req, res, next) {
                 res.locals.title = "Create Scout";

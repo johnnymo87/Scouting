@@ -16,7 +16,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     res.locals.title = 'Akelas';
                     res.locals.akelas = akelas;
 
-                    res.render('Akela/index');
+                    return res.render('Akela/index');
                 });
             }
         },

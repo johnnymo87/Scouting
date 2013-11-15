@@ -22,6 +22,7 @@ module.exports = function(app, Akelas, paging, helpers, config) {
         paging.find(Akelas, {}, null, sort, page, function(err, docs) {
             if (err) return callback(err, null);
 
+            console.log(docs);
             var akelas = _.map(docs, mapAkelas);
 
             callback(null, akelas)
@@ -29,9 +30,10 @@ module.exports = function(app, Akelas, paging, helpers, config) {
     }
 
     function findAkelaById(id, callback) {
-        Akelas.findOne({_id: id}, function(err, doc) {
+        Akelas.findOne({_id: id}).populate('scouts').exec(function(err, doc) {
             if (err) return callback(new Error('Unable to create an Akela.'), null);
 
+            console.log(doc);
             var akela = mapAkelas(doc);
 
             return callback(null, akela);
