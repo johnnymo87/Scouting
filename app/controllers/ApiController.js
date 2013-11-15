@@ -25,7 +25,7 @@ module.exports = function (app, models, services) {
          */
         function (req, res, next) {
             var query = req.query,
-                serviceName = req.params.Model.substring(0, req.params.Model.length - 1) + "Service",
+                serviceName = req.params.Model + "Service",
                 service = services[serviceName];
 
             console.log(serviceName);
