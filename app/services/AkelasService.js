@@ -56,13 +56,16 @@ module.exports = function(app, Akelas, paging, helpers, config) {
     function createAkela(akela, callback) {
         if (!isValid(akela)) callback(new Error('Akela is not valid.'), null);
 
-        akela.alternateemail = akela.alternateemail || "";
-        akela.primaryphone = akela.primaryphone || "";
-        akela.alternatephone = akela.alternatephone || "";
-        akela.datecreated = new Date();
-        akela.datemodified = new Date();
-        akela.createdby = 'web';
-        akela.modifiedby = 'web';
+        akela = _.defaults(akela, {
+            alternateemail: "",
+            primaryphone: "",
+            alternatephone: "",
+            datecreated: new Date(),
+            datemodified: new Date(),
+            createdby: 'web',
+            modifiedby: 'web'
+        });
+
 
         Akelas.create(akela, function(err, doc) {
            if (err) return callback(new Error('Unabled to create Akela'), null);

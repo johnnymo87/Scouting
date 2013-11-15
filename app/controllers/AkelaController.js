@@ -3,20 +3,22 @@ var util = require('util'),
 
 module.exports = function (app, Akelas, helpers, paging, config, AkelasService) {
     return {
-        index: function (req, res, next) {
-            var orderby = {
+        index: {
+            get: function (req, res, next) {
+                var orderby = {
                     field: req.query.orderby || 'firstname',
                     direction: req.query.direction || 1
                 };
 
-            AkelasService.findAll(orderby, 0, function(err, akelas) {
-                if (err) return next(err);
+                AkelasService.findAll(orderby, 0, function (err, akelas) {
+                    if (err) return next(err);
 
-                res.locals.title = 'Akelas';
-                res.locals.akelas = akelas;
+                    res.locals.title = 'Akelas';
+                    res.locals.akelas = akelas;
 
-                res.render('Akela/index');
-            });
+                    res.render('Akela/index');
+                });
+            }
         },
         create: {
             get: function (req, res, next) {
@@ -24,7 +26,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
 
                 return res.render('Akela/create')
             },
-            post: function(req, res, next) {
+            post: function (req, res, next) {
                 var akela = {
                     firstname: req.body.firstname,
                     lastname: req.body.lastname,
@@ -34,7 +36,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     alternatephone: req.body.alternatephone
                 };
 
-                AkelasService.create(akela, function(err, res) {
+                AkelasService.create(akela, function (err, res) {
                     if (err) return next(err);
 
                     return res.redirect('/Akelas');
@@ -42,10 +44,10 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
             }
         },
         read: {
-            get: function(req, res, next) {
+            get: function (req, res, next) {
                 var id = req.params.id;
 
-                AkelasService.findById(id, function(err, akela) {
+                AkelasService.findById(id, function (err, akela) {
                     if (err) return next(err);
 
                     res.locals.title = 'Akela Details';
@@ -56,10 +58,10 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
             }
         },
         update: {
-            get: function(req, res, next) {
-                var id = req. params.id;
+            get: function (req, res, next) {
+                var id = req.params.id;
 
-                AkelasService.findById(id, function(err, akela) {
+                AkelasService.findById(id, function (err, akela) {
                     if (err) return next(err);
 
                     res.locals.title = 'Edit Akela';
@@ -68,7 +70,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     return res.render('Akela/edit');
                 });
             },
-            post: function(req, res, next) {
+            post: function (req, res, next) {
                 var akela = {
                     id: req.body.id,
                     firstname: req.body.firstname,
@@ -79,7 +81,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     alternatephone: req.body.alternatephone
                 };
 
-                AkelasService.update(akela, function(err, akela) {
+                AkelasService.update(akela, function (err, akela) {
                     if (err) return next(err);
 
                     return res.redirect(util.format('/Scouts/Details/%s', akela.id));
@@ -87,10 +89,10 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
             }
         },
         destroy: {
-            get: function(req, res, next) {
+            get: function (req, res, next) {
                 var id = req.params.id;
 
-                AkelasService.findById(id, function(err, akela) {
+                AkelasService.findById(id, function (err, akela) {
                     if (err) return next(err);
 
                     res.locals.title = 'Delete Akela';
@@ -99,10 +101,10 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     return res.render('Akela/delete');
                 });
             },
-            post: function(req, res, next) {
+            post: function (req, res, next) {
                 var id = req.params.id;
 
-                AkelasService.remove(id, function(err, result) {
+                AkelasService.remove(id, function (err, result) {
                     if (err) return next(err);
 
 
