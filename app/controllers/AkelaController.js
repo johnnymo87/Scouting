@@ -98,7 +98,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     res.locals.title = 'Delete Akela';
                     res.locals.akela = akela;
 
-                    return res.render('Akela/delete');
+                    return res.render('Akela/delete'); // CHANGES!
                 });
             },
             post: function (req, res, next) {
