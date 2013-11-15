@@ -1,39 +1,23 @@
 var util = require('util'),
     _ = require('underscore');
 
-module.exports = function (app, Scouts, helpers, paging, config) {
-    paging.setPageSize(config.page_size);
-
+module.exports = function (app, Scouts, helpers, paging, config, ScoutsService) {
     return {
-        index: [
-            function (req, res, next) {
+        index: function (req, res, next) {
                 var orderby = {
+                        field: req.query.orderby || 'firstname',
+                        direction: Number(req.query.direction) || 1
+                    };
 
-                    },
-                    field = req.query.orderby || 'firstname',
-                    direction = Number(req.query.direction) || 1;
+                ScoutsService.findAll(orderby, 0, function(err, scouts) {
+                    if(err) console.log(err);
 
-                orderby[field] = direction;
-                res.locals.title = 'Scouts';
-                paging.find(Scouts, {}, null, orderby, 0, function (err, scouts) {
-                    if (err) res.locals.error = err;
+                    res.locals.title = 'Scouts';
+                    res.locals.scouts = scouts;
 
-                    res.locals.scouts = _.map(scouts, function (scout) {
-                        var bd = scout.birthdate;
-                        return {
-                            firstname: scout.firstname,
-                            lastname: scout.lastname,
-                            birthdate: helpers.Utils.dateFormat(scout.birthdate, 'MMddyyyy', '-'),
-                            rank: scout.rank,
-                            detailsurl: util.format('/Scouts/%s', scout._id.toString()),
-                            editurl: util.format('/Scouts/Edit/%s', scout._id.toString()),
-                            deleteurl: util.format('/Scouts/Delete/%s', scout._id.toString())
-                        };
-                    });
                     res.render('Scout/index');
                 });
-            }
-        ],
+            },
         create: {
             get: function (req, res, next) {
                 res.locals.title = "Create Scout";
@@ -120,10 +104,8 @@ module.exports = function (app, Scouts, helpers, paging, config) {
             }
         },
 
-        destroy: [
-            function (req, res, next) {
+        destroy: function (req, res, next) {
 
-            }
-        ]
+        }
     };
 }

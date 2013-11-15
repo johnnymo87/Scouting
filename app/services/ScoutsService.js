@@ -6,7 +6,16 @@ module.exports = function(app, Scouts, paging, helpers, config) {
         var sort = {};
 
         sort[orderby.fieldname] = orderby.direction;
-        paging.find(Scouts, {}, null, sort, page, callback);
+        var result = paging.find(Scouts, {}, null, sort, page, callback);
+
+//        _.each(result, function(obj){
+//            obj.birthdate = helpers.Utils.dateFormat(obj.birthdate, 'MMddyyyy', '-');
+//            console.log("test");
+//        })
+
+        result.birthdate = helpers.Utils.dateFormat(result.birthdate, 'MMddyyyy', '-');
+
+        return result;
     }
 
     function findScoutById(id, callback) {
