@@ -13,7 +13,7 @@ module.exports = (function() {
             result = result.sort(orderby);
         }
 
-        result.skip(page * pageSize).limit(pageSize).exec(callback);
+        return result.skip(page * pageSize).limit(pageSize).exec(callback);
     }
 
     return {
