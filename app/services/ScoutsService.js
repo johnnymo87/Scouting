@@ -21,13 +21,10 @@ module.exports = function(app, Scouts, paging, helpers, config) {
     function findAllScouts(orderby, page, callback) {
         var sort = {};
 
-        console.log('in findAllScouts');
         sort[orderby.fieldname] = orderby.direction;
         paging.find(Scouts, {}, null, sort, page, function(err, docs){
             if (err) return callback(err, null);
 
-            console.log('past err in findAllScouts');
-            console.log(docs);
             var akelas = _.map(docs, mapScout);
 
             callback(null, akelas);

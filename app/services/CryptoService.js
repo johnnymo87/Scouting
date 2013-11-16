@@ -1,8 +1,7 @@
 var crypto = require('crypto');
 
 module.exports = function() {
-    var iterations = 10000,
-        hashLength = 512,
+    var hashType = 'sha256',
         saltLength = 128,
         encoding = 'hex';
 
@@ -11,11 +10,11 @@ module.exports = function() {
     }
 
     function hashPassword(password, salt, callback) {
-        crypto.pbkdf2(password, salt, iterations, hashLength, function(err, derivedKey) {
-            if (err) return callback(err, null);
+        var hash = crypto.createHash(hashType);
 
-            return callback(null, derivedKey.toString(encoding));
-        });
+        hash.update((new Buffer(password).toString(encoding) + salt));
+
+        return callback(null, hash.digest('hex'));
     }
 
     function validatePassword(password, user, callback) {
@@ -32,7 +31,7 @@ module.exports = function() {
         hashPassword(password, salt, function(err, pw) {
             if (err) return callback(err, null);
 
-            return callback(null, pw);
+            return callback(null, {password: pw, salt: salt});
         });
     }
 

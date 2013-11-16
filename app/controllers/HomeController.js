@@ -3,11 +3,20 @@ module.exports = function (app) {
 
         // Landing
 
-        index:[
-            function (req, res, next) {
+        index:{
+            get: function (req, res, next) {
                 res.locals.title = 'hello world';
                 res.render('index');
-            }]
+            }
+        },
+        login: {
+            get: function(req, res, next) {
+
+            },
+            post: function(req, res, next) {
+
+            }
+        }
 
     };
 };

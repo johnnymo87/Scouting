@@ -5,7 +5,9 @@ module.exports = function (app, ApiController, HomeController, ScoutController, 
 
     // Home
     //app.resource(app.controllers.home);
-    app.get('/', HomeController.index);
+    app.get('/', HomeController.index.get);
+    app.get('/Login', HomeController.login.get);
+    app.post('/Login', HomeController.login.post);
 
     // Scout
     app.get('/Scouts', ScoutController.index);

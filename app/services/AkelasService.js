@@ -55,7 +55,7 @@ module.exports = function(app, Akelas, paging, helpers, config) {
         });
     }
 
-    function createAkela(akela, callback) {
+    function createAkela(akela, callback) {d
         if (!isValid(akela)) callback(new Error('Akela is not valid.'), null);
 
         akela = _.defaults(akela, {

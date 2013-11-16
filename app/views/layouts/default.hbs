@@ -14,7 +14,16 @@
 <ul class="nav nav-tabs">
     <li id="scouts-tab"><a href="/Scouts">Scouts</a></li>
     <li id="akelas-tab"><a href="/Akelas">Akelas</a></li>
+    <li id="login-tab"><a href="">Login</a></li>
 </ul>
+<div id="login-dialog" class="hidden">
+    <div class="container">
+        <form action="/Login" action="POST">
+            {{{input '' 'text' 'Username' id="username" name="username"}}}
+            {{{input '' 'password' 'Password' id="password" name="pasword"}}}
+        </form>
+    </div>
+</div>
 {{{body}}}
 </body>
 </html>
