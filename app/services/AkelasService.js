@@ -11,21 +11,23 @@ module.exports = function(app, Akelas, paging, helpers, config) {
             primaryemail: akela.primaryemail,
             alternateemail: akela.alternateemail,
             primaryphone: akela.primaryphone,
-            alternatephone: akela.alternatephone
+            alternatephone: akela.alternatephone,
+            detailsurl: util.format('/Akelas/Details/%s', akela._id.toString()),
+            editurl: util.format('/Akelas/Edit/%s', akela._id.toString()),
+            deleteurl: util.format('/Akelas/Delete/%s', akela._id.toString())
         };
     }
 
     function findAllAkelas(orderby, page, callback) {
         var sort = {};
 
-        sort[orderby.fieldname] = orderby.direction;
+        sort[orderby.field] = orderby.direction;
         paging.find(Akelas, {}, null, sort, page, function(err, docs) {
             if (err) return callback(err, null);
 
-            console.log(docs);
             var akelas = _.map(docs, mapAkelas);
 
-            callback(null, akelas)
+            return callback(null, akelas)
         });
     }
 
@@ -33,7 +35,6 @@ module.exports = function(app, Akelas, paging, helpers, config) {
         Akelas.findOne({_id: id}).populate('scouts').exec(function(err, doc) {
             if (err) return callback(new Error('Unable to create an Akela.'), null);
 
-            console.log(doc);
             var akela = mapAkelas(doc);
 
             return callback(null, akela);
@@ -55,8 +56,8 @@ module.exports = function(app, Akelas, paging, helpers, config) {
         });
     }
 
-    function createAkela(akela, callback) {d
-        if (!isValid(akela)) callback(new Error('Akela is not valid.'), null);
+    function createAkela(akela, callback) {
+//        if (!isValid(akela)) callback(new Error('Akela is not valid.'), null);
 
         akela = _.defaults(akela, {
             alternateemail: "",
@@ -78,15 +79,45 @@ module.exports = function(app, Akelas, paging, helpers, config) {
         });
     }
 
+    function updateAkela(id, updates, callback) {
+        Akelas.findOneAndUpdate({_id: id}, updates, null, function(err, doc) {
+            if (err) return callback(err, null);
+
+            if (!doc) {
+                return callback(new Error(util.format('Akela: %s does not exist.')), null);
+            }
+
+            var akela = mapAkelas(doc);
+
+            return callback(null, akela);
+        });
+    }
+
+    function destroyAkela(id, callback) {
+        Akelas.findOneAndRemove({_id: id}, null, function(err, doc) {
+            if (err) return callback(err, null);
+
+            if (!doc) {
+                return callback(new Error(util.format('Akela: %s does not exist.')), null);
+            }
+
+            var akela = mapAkelas(doc);
+
+            return callback(null, akela);
+        })
+    }
 
     function isValid(akela) {
-        return !firstname.isNullOrWhitespace() && !akela.lastname.isNullOrWhitespace();
+        console.log(akela);
+        return !akela.firstname.isNullOrWhitespace() && !akela.lastname.isNullOrWhitespace();
     }
 
     return {
         findAll: findAllAkelas,
         findById: findAkelaById,
         findBy: findAkelasBy,
-        create: createAkela
+        create: createAkela,
+        update: updateAkela,
+        destroy: destroyAkela
     };
 };

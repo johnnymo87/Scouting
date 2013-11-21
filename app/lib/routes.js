@@ -50,9 +50,11 @@ module.exports = function (app, ApiController, HomeController, ScoutController, 
     app.get('/Akelas', AkelaController.index.get);
     app.get('/Akelas/Create', AkelaController.create.get);
     app.post('/Akelas/Create', AkelaController.create.post);
-//    app.get('/Akelas/:id', AkelaController.read);
-//    app.post('/Akelas/:id', AkelaController.update);
-//    app.del('/Akelas/:id', AkelaController.destroy);
+    app.get('/Akelas/Details/:id', AkelaController.read.get);
+    app.get('/Akelas/Edit/:id', AkelaController.update.get);
+    app.post('/Akelas/Edit/:id', AkelaController.update.post);
+    app.get('/Akelas/Delete/:id', AkelaController.destroy.get);
+    app.del('/Akelas/Delete/:id', AkelaController.destroy.del);
 
     // Achievements
 //    app.get('/Achievements', AchievementController.index);

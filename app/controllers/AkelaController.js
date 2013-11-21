@@ -1,16 +1,17 @@
 var util = require('util'),
     _ = require('underscore');
 
-module.exports = function (app, Akelas, helpers, paging, config, AkelasService) {
+module.exports = function (app, config, AkelasService) {
     return {
         index: {
             get: function (req, res, next) {
                 var orderby = {
-                    field: req.query.orderby || 'firstname',
-                    direction: req.query.direction || 1
-                };
+                        field: req.query.orderby || 'firstname',
+                        direction: req.query.direction || 1
+                    },
+                    page = req.query.page || 1;
 
-                AkelasService.findAll(orderby, 0, function (err, akelas) {
+                AkelasService.findAll(orderby, page, function (err, akelas) {
                     if (err) return next(err);
 
                     res.locals.title = 'Akelas';
@@ -36,7 +37,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     alternatephone: req.body.alternatephone
                 };
 
-                AkelasService.create(akela, function (err, res) {
+                AkelasService.create(akela, function (err, akela) {
                     if (err) return next(err);
 
                     return res.redirect('/Akelas');
@@ -81,7 +82,7 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     alternatephone: req.body.alternatephone
                 };
 
-                AkelasService.update(akela, function (err, akela) {
+                AkelasService.update(akela.id, akela, function (err, akela) {
                     if (err) return next(err);
 
                     return res.redirect(util.format('/Scouts/Details/%s', akela.id));
@@ -98,13 +99,13 @@ module.exports = function (app, Akelas, helpers, paging, config, AkelasService) 
                     res.locals.title = 'Delete Akela';
                     res.locals.akela = akela;
 
-                    return res.render('Akela/delete'); // CHANGES!
+                    return res.render('Akela/delete');
                 });
             },
-            post: function (req, res, next) {
+            del: function (req, res, next) {
                 var id = req.params.id;
 
-                AkelasService.remove(id, function (err, result) {
+                AkelasService.destroy(id, function (err, akela) {
                     if (err) return next(err);
 
 

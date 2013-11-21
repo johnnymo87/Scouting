@@ -17,7 +17,8 @@
         "express-hbs":"latest",
         "passport":"latest",
         "winston":"latest",
-        "underscore": "latest"
+        "underscore": "latest",
+        "passport": "latest"
     },
     "devDependencies":{
         "mocha":"latest"

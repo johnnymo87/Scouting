@@ -6,14 +6,15 @@ module.exports = (function() {
     }
 
     function pagedFind(model, query, fields, orderby, page, callback) {
-        var options = { 'skip': (page || 0), 'limit': pageSize },
-            result = model.find(query, fields || null);
+        var result = model.find(query, fields || null);
 
         if (orderby) {
             result = result.sort(orderby);
         }
 
-        return result.skip(page * pageSize).limit(pageSize).exec(callback);
+        return result.skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .exec(callback);
     }
 
     return {

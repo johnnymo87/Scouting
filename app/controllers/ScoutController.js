@@ -1,23 +1,22 @@
 var util = require('util'),
     _ = require('underscore');
 
-module.exports = function (app, Scouts, helpers, paging, config, ScoutsService) {
+module.exports = function (app, helpers, config, ScoutsService) {
     return {
         index: function (req, res, next) {
             var orderby = {
                 field: req.query.orderby || 'firstname',
                 direction: Number(req.query.direction) || 1
-            };
+            },
+                page = req.query.page || 1;
 
-            ScoutsService.findAll(orderby, 0, function (err, scouts) {
-                if (err) console.log(err);
-
-                console.log(scouts);
+            ScoutsService.findAll(orderby, page, function (err, scouts) {
+                if (err) return next(err);
 
                 res.locals.title = 'Scouts';
                 res.locals.scouts = scouts;
 
-                res.render('Scout/index');
+                return res.render('Scout/index');
             });
         },
         create: {

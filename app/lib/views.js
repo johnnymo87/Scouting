@@ -1,9 +1,8 @@
 var hbs = require('express-hbs'),
     path = require('path'),
-    util = require('util'),
-    htmlHelpers = require('./helpers').Html;
+    util = require('util');
 
-module.exports = function (app) {
+module.exports = function (app, helpers) {
 
     //set up view engine
     app.set('view engine', 'hbs');
@@ -17,9 +16,9 @@ module.exports = function (app) {
     });
 
     // Html Helpers
-    for (var h in htmlHelpers) {
-        if (htmlHelpers.hasOwnProperty(h)) {
-            hbs.registerHelper(h, htmlHelpers[h]);
+    for (var h in helpers.Html) {
+        if (helpers.Html.hasOwnProperty(h)) {
+            hbs.registerHelper(h, helpers.Html[h]);
         }
     }
 };

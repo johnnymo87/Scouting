@@ -13,12 +13,13 @@
  <table>
      <thead>
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Primary Email</th>
-            <th>Alternate Email</th>
+            <th>{{{link 'First Name' '/Akelas?orderby=firstname&direction=1'}}}</th>
+            <th>{{{link 'Last Name' '/Akelas?orderby=lastname&direction=1'}}}</th>
+            <th>{{{link 'Primary Email' '/Akelas?orderby=primaryemail&direction=1'}}}</th>
+            <th>{{{link 'Alternate Email' '/Akelas?orderby=alternateemail&direction=1'}}}</th>
             <th>Primary Phone</th>
             <th>Alternate Phone</th>
+            <th></th>
         </tr>
      </thead>
      <tbody>
@@ -30,6 +31,11 @@
                 <td>{{alternateemail}}</td>
                 <td>{{primaryphone}}</td>
                 <td>{{alternatephone}}</td>
+                <td>
+                    {{{link 'Details' detailsurl}}} |
+                    {{{link 'Edit' editurl}}} |
+                    {{{link 'Delete' deleteurl}}}
+                </td>
             </tr>
         {{/each}}
      </tbody>
