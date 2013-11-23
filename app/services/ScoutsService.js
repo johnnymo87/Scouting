@@ -4,7 +4,7 @@ var util = require('util'),
 module.exports = function(app, Scouts, paging, helpers, config) {
 
     function mapScout(scout) {
-        var baseurl = 'Scouts/{0}/' + scout.id;
+        var baseurl = 'Scouts/%s/' + scout.id;
         
         return {
             id: scout._id,
@@ -12,9 +12,9 @@ module.exports = function(app, Scouts, paging, helpers, config) {
             lastname: scout.lastname,
             birthdate: helpers.Utils.dateFormat(scout.birthdate, 'MMddyyyy', '-'),
             rank: scout.rank,
-            detailsurl: 'Scouts/{0}'.format(scout.id),
-            editurl: baseurl.format('edit'),
-            deleteurl: baseurl.format('delete')
+            detailsurl: util.format(baseurl, 'details'),
+            editurl: util.format(baseurl, 'edit'),
+            deleteurl: util.format(baseurl, 'delete')
         }
     }
 
@@ -32,7 +32,13 @@ module.exports = function(app, Scouts, paging, helpers, config) {
     }
 
     function findScoutById(id, callback) {
+        Scouts.findOne({_id: id}).populate('akelas').exec(function(err, doc) {
+            if (err) return callback(new Error('Unable to retrieve scout from database'), null);
 
+            var scout = mapScout(doc);
+
+            return callback(null, scout);
+        });
     }
 
     return {

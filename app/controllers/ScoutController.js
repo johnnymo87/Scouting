@@ -44,29 +44,20 @@ module.exports = function (app, helpers, config, ScoutsService) {
                 });
             }
         },
-        read: [
-            function (req, res, next) {
+        read: {
+            get: function (req, res, next) {
                 var id = req.params.id;
 
-                res.locals.id = id;
+                ScoutsService.findById(id, function (err, scout) {
+                    if (err) return next(err);
 
-                Scouts.findOne({_id: id}, function (err, doc) {
-                    if (err) console.log(err);
-
-
-                    res.locals.scout = {
-                        firstname: doc.firstname,
-                        lastname: doc.lastname,
-                        birthdate: helpers.Utils.dateFormat(doc.birthdate, 'yyyyMMdd', '-'),
-                        rank: doc.rank,
-                        editurl: util.format('/Scouts/Edit/%s', doc._id.toString())
-                    };
                     res.locals.title = 'Scout Details';
+                    res.locals.scout = scout;
 
-                    res.render('Scout/details');
-                })
+                    return res.render('Scout/details');
+                });
             }
-        ],
+        },
         update: {
             get: function (req, res, next) {
                 var id = req.params.id;
