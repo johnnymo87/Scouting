@@ -10,7 +10,7 @@ module.exports = function (app, ApiController, HomeController, ScoutController, 
     app.post('/Login', HomeController.login.post);
 
     // Scout
-    app.get('/Scouts', ScoutController.index);
+    app.get('/Scouts', ScoutController.index.get);
     app.get('/Scouts/Create', ScoutController.create.get);
     app.post('/Scouts', ScoutController.create.post);
     app.get('/Scouts/Details/:id', ScoutController.read.get);

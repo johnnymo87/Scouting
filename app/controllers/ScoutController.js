@@ -3,21 +3,23 @@ var util = require('util'),
 
 module.exports = function (app, helpers, config, ScoutsService) {
     return {
-        index: function (req, res, next) {
-            var orderby = {
-                field: req.query.orderby || 'firstname',
-                direction: Number(req.query.direction) || 1
-            },
+        index: {
+            get: function (req, res, next) {
+                var orderby = {
+                    field: req.query.orderby || 'firstname',
+                    direction: Number(req.query.direction) || 1
+                },
                 page = req.query.page || 1;
 
-            ScoutsService.findAll(orderby, page, function (err, scouts) {
-                if (err) return next(err);
+                ScoutsService.findAll(orderby, page, function (err, scouts) {
+                    if (err) return next(err);
 
-                res.locals.title = 'Scouts';
-                res.locals.scouts = scouts;
+                    res.locals.title = 'Scouts';
+                    res.locals.scouts = scouts;
 
-                return res.render('Scout/index');
-            });
+                    return res.render('Scout/index');
+                });
+            }
         },
         create: {
             get: function (req, res, next) {
