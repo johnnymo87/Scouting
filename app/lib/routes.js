@@ -13,7 +13,7 @@ module.exports = function (app, ApiController, HomeController, ScoutController, 
     app.get('/Scouts', ScoutController.index);
     app.get('/Scouts/Create', ScoutController.create.get);
     app.post('/Scouts', ScoutController.create.post);
-    app.get('/Scouts/:id', ScoutController.read);
+    app.get('/Scouts/Details/:id', ScoutController.read.get);
     app.get('/Scouts/Edit/:id', ScoutController.update.get);
     app.post('/Scouts/Edit/:id', ScoutController.update.post);
     app.del('/Scouts/Delete/:id', ScoutController.destroy);
