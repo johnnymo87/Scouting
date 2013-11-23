@@ -5,7 +5,7 @@ module.exports = function(app, Scouts, paging, helpers, config) {
 
     function mapScout(scout) {
         var baseurl = 'Scouts/%s/' + scout.id;
-        
+
         return {
             id: scout._id,
             firstname: scout.firstname,
