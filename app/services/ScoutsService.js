@@ -10,7 +10,8 @@ module.exports = function(app, Scouts, paging, helpers, config) {
             id: scout._id,
             firstname: scout.firstname,
             lastname: scout.lastname,
-            birthdate: helpers.Utils.dateFormat(scout.birthdate, 'MMddyyyy', '-'),
+            birthdate: helpers.Utils.dateFormat(scout.birthdate, 'yyyyMMdd', '-'),
+//            birthdate: helpers.Utils.dateFormat(scout.birthdate, 'MMddyyyy', '-'),
             rank: scout.rank,
             detailsurl: util.format(baseurl, 'details'),
             editurl: util.format(baseurl, 'edit'),
@@ -41,8 +42,23 @@ module.exports = function(app, Scouts, paging, helpers, config) {
         });
     }
 
+    function updateScout(id, scout, callback) {
+        Scouts.findOneAndUpdate({_id: id}, scout, null, function(err, doc) {
+            if (err) return callback(err, null);
+
+            if (!doc) {
+                return callback(new Error(util.format('Scout: %s does not exist.', id)), null);
+            }
+
+            var scout = mapScout(doc);
+
+            return callback(null, scout);
+        });
+    }
+
     return {
         findAll: findAllScouts,
-        findById: findScoutById
+        findById: findScoutById,
+        update: updateScout
     };
 };

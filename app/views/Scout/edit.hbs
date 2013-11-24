@@ -5,6 +5,7 @@
 {{#form scout.posturl 'POST'}}
     {{#with scout}}
         <div>
+            {{{input id 'hidden' '' id='id' name='id'}}}
             {{{input firstname 'text' 'First Name' id="firstname" name="firstname"}}}
             {{{input lastname 'text' 'Last Name' id="lastname" name="lastname"}}}
             {{{input birthdate 'date' 'Birthdate' id="birthdate" name="birthdate"}}}

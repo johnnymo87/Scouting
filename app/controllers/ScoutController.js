@@ -64,24 +64,18 @@ module.exports = function (app, helpers, config, ScoutsService) {
             get: function (req, res, next) {
                 var id = req.params.id;
 
-                res.locals.title = "Update Scout";
+                ScoutsService.findById(id, function (err, scout) {
+                    if (err) return next(err);
 
-                Scouts.findOne({_id: id}, function (err, doc) {
-                    if (err) console.log(err);
+                    res.locals.title = 'Edit Scout';
+                    res.locals.scout = scout;
 
-                    res.locals.scout = {
-                        firstname: doc.firstname,
-                        lastname: doc.lastname,
-                        birthdate: helpers.Utils.dateFormat(doc.birthdate, 'yyyyMMdd', '-'),
-                        rank: doc.rank,
-                        posturl: util.format('/Scouts/Edit/%s', doc._id)
-                    };
-
-                    res.render('Scout/edit');
+                    return res.render('Scout/edit');
                 });
             },
             post: function (req, res, next) {
                 var scout = {
+                    id: req.body.id,
                     firstname: req.body.firstname,
                     lastname: req.body.lastname,
                     birthdate: req.body.birthdate,
@@ -90,10 +84,10 @@ module.exports = function (app, helpers, config, ScoutsService) {
                     modifiedby: 'web'
                 };
 
-                Scouts.findOneAndUpdate({_id: req.params.id}, scout, {new: false}, function (err, doc) {
-                    if (err) console.log(err);
+                ScoutsService.update(scout.id, scout, function(err, scout) {
+                    if (err) return next(err);
 
-                    res.redirect('/Scouts');
+                    return res.redirect(util.format('/Scouts/Details/%s', scout.id));
                 });
             }
         },
