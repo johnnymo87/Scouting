@@ -11,7 +11,6 @@ module.exports = function(app, Scouts, paging, helpers, config) {
             firstname: scout.firstname,
             lastname: scout.lastname,
             birthdate: helpers.Utils.dateFormat(scout.birthdate, 'yyyyMMdd', '-'),
-//            birthdate: helpers.Utils.dateFormat(scout.birthdate, 'MMddyyyy', '-'),
             rank: scout.rank,
             detailsurl: util.format(baseurl, 'details'),
             editurl: util.format(baseurl, 'edit'),
