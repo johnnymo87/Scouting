@@ -22,7 +22,8 @@
     },
     "devDependencies":{
         "mocha":"latest",
-        "assert":"latest"
+        "expect.js":"latest",
+        "should":"latest"
     },
     "main":"./app/index.js",
     "scripts":{
