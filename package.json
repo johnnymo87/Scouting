@@ -21,7 +21,8 @@
         "passport": "latest"
     },
     "devDependencies":{
-        "mocha":"latest"
+        "mocha":"latest",
+        "assert":"latest"
     },
     "main":"./app/index.js",
     "scripts":{
